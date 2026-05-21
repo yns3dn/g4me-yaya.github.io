@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G4me-yaya | PS5 Gamer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #00c8ff;
+      --blue-dark: #0077a8;
+      --ps-blue: #003087;
+      --bg: #050a12;
+      --bg2: #0a1120;
+      --card: #0d1828;
+      --border: rgba(0, 200, 255, 0.18);
+      --text: #cde8f5;
+      --glow: 0 0 18px rgba(0,200,255,0.45);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      /* ============================
+         FOND DU SITE
+         Remplace "fond.jpg" par le nom
+         de ton image (doit être dans
+         le même dossier que site.html)
+         ============================ */
+      background-color: var(--bg);
+      background-image: url('fond.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Overlay sombre par-dessus l'image pour garder la lisibilité */
+    body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 0;
+}
+
+    /* Scanlines */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 60px 20px 30px;
+      background: linear-gradient(180deg, rgba(0,48,135,0.3) 0%, transparent 100%);
+    }
+
+    .ps5-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,48,135,0.7);
+      border: 1px solid var(--blue);
+      border-radius: 4px;
+      padding: 5px 14px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeIn 0.6s ease both;
+    }
+
+    .ps5-badge::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--blue);
+      border-radius: 50%;
+      box-shadow: var(--glow);
+      animation: blink 1.8s infinite;
+    }
+
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .profile-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      animation: fadeUp 0.7s ease both 0.1s;
+    }
+
+    .avatar-ring {
+      position: relative;
+      width: 130px; height: 130px;
+    }
+
+    .avatar-ring::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(var(--blue), var(--ps-blue), var(--blue));
+      animation: spin 4s linear infinite;
+    }
+
+    .avatar-ring::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(transparent 60%, var(--blue));
+      animation: spin 4s linear infinite reverse;
+      opacity: 0.5;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .avatar-ring img {
+      position: relative;
+      z-index: 1;
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 3px solid var(--bg);
+    }
+
+    .online-dot {
+      position: absolute;
+      bottom: 6px; right: 6px;
+      z-index: 2;
+      width: 16px; height: 16px;
+      background: #00e676;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 8px #00e676;
+      animation: blink 2s infinite;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(0,200,255,0.5);
+      line-height: 1;
+    }
+
+    h1 span { color: var(--blue); }
+
+    .tagline {
+      font-size: 1rem;
+      letter-spacing: 4px;
+      color: rgba(205,232,245,0.55);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 28px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat { text-align: center; }
+
+    .stat-val {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .stat-lbl {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: rgba(205,232,245,0.45);
+      text-transform: uppercase;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 5px;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.7s ease both 0.2s;
+    }
+
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(180deg, var(--blue), transparent);
+    }
+
+    .about-text {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      background: rgba(0,200,255,0.08);
+      border: 1px solid rgba(0,200,255,0.25);
+      border-radius: 4px;
+      padding: 4px 12px;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: var(--blue);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 40px;
+      animation: fadeUp 0.7s ease both 0.3s;
+    }
+
+    .game-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 16px;
+      text-align: center;
+      transition: all 0.25s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,200,255,0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .game-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-4px);
+      box-shadow: var(--glow);
+    }
+
+    .game-card:hover::after { opacity: 1; }
+
+    .game-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .game-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 1.5px;
+      color: #fff;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    .game-genre {
+      font-size: 0.75rem;
+      color: rgba(205,232,245,0.4);
+      margin-top: 4px;
+    }
+
+    .console-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s ease both 0.4s;
+    }
+
+    .console-icon {
+      font-size: 3.5rem;
+      filter: drop-shadow(0 0 12px rgba(0,200,255,0.4));
+    }
+
+    .console-info h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .console-info p {
+      font-size: 0.95rem;
+      color: rgba(205,232,245,0.5);
+      letter-spacing: 1px;
+    }
+
+    .status-online {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,230,118,0.1);
+      border: 1px solid rgba(0,230,118,0.3);
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: #00e676;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .status-online::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: #00e676;
+      border-radius: 50%;
+      animation: blink 1.8s infinite;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: rgba(205,232,245,0.25);
+      letter-spacing: 2px;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 1.7rem; }
+      .games-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .next-btn {
+  position: relative;
+  z-index: 10;
+  pointer-events: all;
+}
+
+a[href="reseaux.html"] {
+  position: relative;
+  z-index: 10;
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="ps5-badge">PS5 Player &nbsp;·&nbsp; Online</div>
+
+    <div class="profile-wrap">
+      <div class="avatar-ring">
+        <img src="PP.png" alt="G4me-yaya" />
+        <span class="online-dot"></span>
+      </div>
+
+      <div>
+        <h1><span>G4me</span>-yaya</h1>
+        <p class="tagline">PS5 &nbsp;·&nbsp; Gamer Français</p>
+
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-val">18</div>
+            <div class="stat-lbl">Ans</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">6</div>
+            <div class="stat-lbl">Jeux</div>
+          </div>
+          <div class="stat">
+            <div class="stat-val">🇫🇷</div>
+            <div class="stat-lbl">France</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <p class="section-title">// À propos</p>
+    <div class="about-card">
+      <p class="about-text">
+        Salut, c'est <strong style="color:#fff">G4me-yaya</strong>, français de 18 ans,
+        j'suis sur PS5. Amical, drôle, et là pour jouer avec des gens.
+        Venez jouer ! 😄
+      </p>
+      <div class="tags">
+        <span class="tag">🇫🇷 Français</span>
+        <span class="tag">😄 Amical</span>
+        <span class="tag">🎮 Gamer</span>
+        <span class="tag">🔥 18 ans</span>
+      </div>
+    </div>
+
+    <p class="section-title">// Ma console</p>
+    <div class="console-card">
+      <div class="console-icon">🎮</div>
+      <div class="console-info">
+        <h3>PlayStation 5</h3>
+        <p>Console principale &nbsp;·&nbsp; Pseudo : G4me-yaya</p>
+      </div>
+      <div class="status-online">En ligne</div>
+    </div>
+
+    <p class="section-title">// Mes jeux</p>
+    <div class="games-grid">
+
+      <div class="game-card">
+        <span class="game-icon">🌆</span>
+        <div class="game-name">GTA V</div>
+        <div class="game-genre">Open World</div>
+        <div class="game-houres">1399 heures</div>
+      </div>
+
+      <div class="game-card">
+        <span class="game-icon">🚗</span>
+        <div class="game-name">Rocket League</div>
+        <div class="game-genre">Sport / Compétitif</div>
+        <div class="game-houres">1018 heures</div>
+      </div>
+
+      <div class="game-card">
+        <span class="game-icon">🪂</span>
+        <div class="game-name">Fortnite</div>
+        <div class="game-genre">Battle Royale</div>
+        <div class="game-houres">289 heures</div>
+      </div>
+
+      <div class="game-card">
+        <span class="game-icon">💀</span>
+        <div class="game-name">Warzone</div>
+        <div class="game-genre">FPS / Battle Royale</div>
+        <div class="game-houres">??? heures</div>
+      </div>
+
+      <div class="game-card">
+        <span class="game-icon">⚔️</span>
+        <div class="game-name">Lord of the Fallen</div>
+        <div class="game-genre">Action RPG</div>
+        <div class="game-houres">58 heures</div>
+      </div>
+
+      <div class="game-card">
+        <span class="game-icon">⛏️</span>
+        <div class="game-name">Minecraft</div>
+        <div class="game-genre">Survie / Créatif</div>
+        <div class="game-houres">595 heures</div>
+      </div>
+
+    </div>
+
+  </main>
+
+ 
+  <div style="text-align: center; margin: 30px auto;">
+ <a href="reseaux.html">
+    <button class="next-btn">Mes Réseaux ▶</button>
+  </a>
+ <footer>
+   &copy; 2026 &nbsp;·&nbsp; G4me-yaya &nbsp;·&nbsp; PS5 &nbsp;·&nbsp; France
+  </footer>
+</body>
+</html>
